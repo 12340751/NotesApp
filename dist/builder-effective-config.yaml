@@ -1,0 +1,21 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.antigravity.notesmanager
+productName: NotesManager
+asar: true
+win:
+  target: nsis
+  icon: icon.png
+nsis:
+  oneClick: true
+  allowToChangeInstallationDirectory: false
+  deleteAppDataOnUninstall: false
+  artifactName: NotesApp-Setup-Portable.exe
+files:
+  - filter:
+      - '**/*'
+      - '!dist/**/*'
+      - '!app.py'
+      - '!requirements.txt'
+electronVersion: 28.3.3
