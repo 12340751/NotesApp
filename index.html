@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity Notes — Премиум Заметки</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Inter:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+
+<body class="dark-mode">
+    <div class="custom-titlebar">
+        <div class="drag-handle">Infinity Notes</div>
+        <div class="window-controls">
+            <button id="win-min" class="win-btn">ー</button>
+            <button id="win-max" class="win-btn">▢</button>
+            <button id="win-close" class="win-btn close">✕</button>
+        </div>
+    </div>
+
+    <div class="app-glass-container" id="app-root">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="brand">Infinity</span>
+                <button id="new-note-btn" title="Новая заметка">+</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Поиск заметки...">
+            </div>
+
+            <div class="sidebar-sections">
+                <section class="notes-section">
+                    <div class="section-header">ВАШИ ЗАМЕТКИ</div>
+                    <ul id="notes-list"></ul>
+                </section>
+            </div>
+
+            <div class="sidebar-footer">
+                <div id="user-info" class="user-badge hidden">
+                    <span id="display-username"></span>
+                </div>
+                <button id="admin-btn" class="special-btn hidden">Админ-панель 🛠️</button>
+                <div class="footer-actions">
+                    <button id="open-settings-btn" title="Настройки">⚙️</button>
+                    <button id="logout-btn" title="Выйти">🚪</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="editor-area">
+            <header class="toolbar" id="toolbar">
+                <button id="toggle-sidebar" class="icon-btn">☰</button>
+                <div class="toolbar-group">
+                    <button data-type="bold">B</button>
+                    <button data-type="italic">I</button>
+                    <button data-type="header">H</button>
+                </div>
+                <div class="toolbar-divider"></div>
+                <div class="toolbar-group">
+                    <button id="toggle-preview">Превью</button>
+                    <button id="zen-mode-btn">Дзен</button>
+                </div>
+                <div class="toolbar-spacer"></div>
+                <div class="stats">
+                    <span id="word-count">0 слов</span>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="editor-pane">
+                    <div class="title-bar">
+                        <input type="text" id="note-title" placeholder="Без названия" readonly>
+                        <span id="save-status" class="saved">Сохранено</span>
+                    </div>
+                    <textarea id="markdown-input" placeholder="Начните писать..."></textarea>
+                </div>
+                <div class="preview-pane markdown-body" id="markdown-preview"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Auth Overlay -->
+    <div id="auth-overlay" class="auth-overlay">
+        <div class="auth-card glass">
+            <h2>Добро пожаловать</h2>
+            <div class="auth-form">
+                <input type="text" id="auth-username" class="auth-input" placeholder="Логин">
+                <input type="password" id="auth-password" class="auth-input" placeholder="Пароль">
+                <button id="auth-submit-btn" class="auth-btn">Войти</button>
+                <div id="auth-error" class="error-msg"></div>
+            </div>
+            <div class="auth-switch">
+                <span id="auth-toggle-text">Нет аккаунта? <span id="auth-toggle">Создать</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Overlay -->
+    <div id="admin-overlay" class="overlay hidden">
+        <div class="admin-panel glass-high">
+            <div class="admin-header">
+                <h3>Управление Системой</h3>
+                <button id="close-admin-btn">✕</button>
+            </div>
+            <div class="admin-layout">
+                <div class="user-list-side">
+                    <h4>Пользователи</h4>
+                    <div id="admin-user-list" class="user-list"></div>
+                </div>
+                <div id="admin-actions-pane" class="actions-pane hidden">
+                    <h4 id="selected-user-name">Выбор пользователя</h4>
+                    <div class="user-status-badge">Статус: <span id="user-online-status">Оффлайн</span></div>
+                    <div class="admin-buttons-grid">
+                        <button class="adm-btn danger" id="adm-delete">Удалить аккаунт💀</button>
+                        <button class="adm-btn warning" id="adm-close-app">Закрыть программу ❌</button>
+                        <button class="adm-btn troll" id="adm-troll">Затролить 😂</button>
+                        <button class="adm-btn sound" id="adm-axel">Аксельбот 🔊</button>
+                        <button class="adm-btn info" id="adm-fake-msg">Фейк сообщение 📩</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Troll Video -->
+    <video id="troll-video" class="fullscreen-overlay hidden">
+        <source src="Video/ПАСХАЛКО 1488 ДЖОКЕР.mp4" type="video/mp4">
+    </video>
+
+    <!-- Sound Player -->
+    <audio id="axel-sound" src="Sounds/A.mp3"></audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="renderer.js"></script>
+</body>
+
+</html>

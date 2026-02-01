@@ -1,0 +1,46 @@
+{
+    "name": "notes-manager",
+    "version": "1.0.0",
+    "description": "Minimalist Markdown Notes Manager",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "build": "electron-builder --win portable"
+    },
+    "keywords": [
+        "notes",
+        "markdown",
+        "electron"
+    ],
+    "author": "Antigravity AI",
+    "license": "MIT",
+    "devDependencies": {
+        "electron": "^28.0.0",
+        "electron-builder": "^24.9.1"
+    },
+    "dependencies": {
+        "firebase": "^12.8.0",
+        "marked": "^11.1.1"
+    },
+    "build": {
+        "appId": "com.antigravity.notesmanager",
+        "productName": "NotesManager",
+        "asar": true,
+        "win": {
+            "target": "nsis",
+            "icon": "icon.png"
+        },
+        "nsis": {
+            "oneClick": true,
+            "allowToChangeInstallationDirectory": false,
+            "deleteAppDataOnUninstall": false,
+            "artifactName": "NotesApp-Setup-Portable.exe"
+        },
+        "files": [
+            "**/*",
+            "!dist/**/*",
+            "!app.py",
+            "!requirements.txt"
+        ]
+    }
+}
